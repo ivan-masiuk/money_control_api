@@ -12,7 +12,7 @@ class CustomerListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
-        fields = ("name", "age", )
+        fields = ("name", "age", "id", )
 
 
 class CustomerDetailsSerializer(serializers.ModelSerializer):

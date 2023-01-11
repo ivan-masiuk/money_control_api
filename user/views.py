@@ -1,5 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import generics
+
 
 from .models import Customer
 from .serializers import (
@@ -8,21 +10,17 @@ from .serializers import (
 )
 
 
-class CustomerListView(APIView):
+class CustomerListView(generics.ListAPIView):
     """
     View all customers
     """
-    def get(self, request):
-        user = Customer.objects.all()
-        serializer = CustomerListSerializer(user, many=True)
-        return Response(serializer.data)
+    queryset = Customer.objects.all()
+    serializer_class = CustomerListSerializer
 
 
-class CustomerDetailsView(APIView):
+class CustomerDetailsView(generics.ListAPIView):
     """
     View all data by customer
     """
-    def get(self, request, pk):
-        user = Customer.objects.get(id=pk)
-        serializer = CustomerDetailsSerializer(user)
-        return Response(serializer.data)
+    queryset = Customer.objects.all()
+    serializer_class = CustomerDetailsSerializer

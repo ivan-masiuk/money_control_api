@@ -18,13 +18,13 @@ class TransactionDetailsSerializer(serializers.ModelSerializer):
     Prepare data of transaction by all fields
     """
 
-    # customer_fk = serializers.SlugRelatedField(
-    #     slug_field="name", read_only=True,  # many=True
-    # )
+    customer_fk = serializers.SlugRelatedField(
+        slug_field="name", read_only=True,  # many=True
+    )
 
     class Meta:
         model = Transaction
-        exclude = ("updated", "customer_fk", )
+        exclude = ("updated", )
 
 
 class TransactionCreateSerializer(serializers.ModelSerializer):
@@ -36,13 +36,11 @@ class TransactionCreateSerializer(serializers.ModelSerializer):
         model = Transaction
         fields = "__all__"
 
-    def create(self, validated_data):
-        updated_values = {
-            "amount": validated_data.get("amount"),
-            "type": validated_data.get("type"),
-        }
-        created, transaction = Transaction.objects.update_or_create(
-            id=validated_data.get("id"),
-            defaults=updated_values,
-        )
-        return transaction
+
+class TransactionUpdateSerializer(serializers.ModelSerializer):
+    """
+    Update transaction serializer
+    """
+    class Meta:
+        model = Transaction
+        exclude = ("customer_fk", )

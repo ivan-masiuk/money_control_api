@@ -1,3 +1,4 @@
+from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -6,38 +7,36 @@ from .serializers import (
     TransactionListSerializer,
     TransactionDetailsSerializer,
     TransactionCreateSerializer,
+    TransactionUpdateSerializer,
 )
 
 
-class TransactionListView(APIView):
+class TransactionListView(generics.ListAPIView):
     """
     View all transactions
     """
-    def get(self, request):
-        transactions = Transaction.objects.all()
-        serializer = TransactionListSerializer(transactions, many=True)
-        return Response(serializer.data)
+    queryset = Transaction.objects.all()
+    serializer_class = TransactionListSerializer
 
 
-class TransactionDetailsView(APIView):
+class TransactionDetailsView(generics.RetrieveAPIView):
     """
     View all data by transaction
     """
-    def get(self, request, pk):
-        transaction = Transaction.objects.get(id=pk)
-        serializer = TransactionDetailsSerializer(transaction)
-        return Response(serializer.data)
+    queryset = Transaction.objects.filter()
+    serializer_class = TransactionDetailsSerializer
 
 
-class TransactionCreateView(APIView):
+class TransactionCreateView(generics.CreateAPIView):
     """
     Create transaction
     """
+    serializer_class = TransactionCreateSerializer
 
-    def post(self, request):
-        transaction = TransactionCreateSerializer(data=request.data)
-        if transaction.is_valid():
-            transaction.save(id=request.data["id"])
-            return Response(status=201)
-        else:
-            return Response(status=400)
+    # def perform_create(self, serializer):
+    #     serializer.save(id=self.request.data["id"])
+
+
+class TransactionUpdateView(generics.UpdateAPIView):
+    queryset = Transaction.objects.filter()
+    serializer_class = TransactionUpdateSerializer

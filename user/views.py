@@ -18,9 +18,9 @@ class CustomerListView(generics.ListAPIView):
     serializer_class = CustomerListSerializer
 
 
-class CustomerDetailsView(generics.ListAPIView):
+class CustomerDetailsView(generics.RetrieveAPIView):
     """
     View all data by customer
     """
-    queryset = Customer.objects.all()
+    queryset = Customer.objects.filter()
     serializer_class = CustomerDetailsSerializer

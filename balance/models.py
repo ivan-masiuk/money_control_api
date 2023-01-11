@@ -6,7 +6,11 @@ class Transaction(models.Model):
     Money moving (transactions)
     """
     customer_fk = models.ForeignKey(
-        "user.Customer", on_delete=models.CASCADE, blank=True, null=True,
+        "user.Customer",
+        on_delete=models.CASCADE,
+        related_name="transactions",
+        blank=True,
+        null=True,
     )
     amount = models.PositiveIntegerField(default=0)
     TYPE_CHOICES = [

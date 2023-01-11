@@ -5,6 +5,7 @@ from .models import Transaction
 from .serializers import (
     TransactionListSerializer,
     TransactionDetailsSerializer,
+    TransactionCreateSerializer,
 )
 
 
@@ -26,3 +27,14 @@ class TransactionDetailsView(APIView):
         transaction = Transaction.objects.get(id=pk)
         serializer = TransactionDetailsSerializer(transaction)
         return Response(serializer.data)
+
+
+class TransactionCreateView(APIView):
+    """
+    Create transaction
+    """
+    def post(self, request):
+        transaction = TransactionCreateSerializer(data=request.data)
+        if transaction.is_valid():
+            transaction.save()
+        return Response(status=201)

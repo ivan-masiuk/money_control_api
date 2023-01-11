@@ -25,3 +25,13 @@ class TransactionDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
         exclude = ("updated", )
+
+
+class TransactionCreateSerializer(serializers.ModelSerializer):
+    """
+    Creation transaction serializer
+    """
+
+    class Meta:
+        model = Transaction
+        fields = "__all__"

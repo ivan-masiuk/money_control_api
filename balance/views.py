@@ -33,10 +33,14 @@ class TransactionCreateView(generics.CreateAPIView):
     """
     serializer_class = TransactionCreateSerializer
 
+    # # additional saving data
     # def perform_create(self, serializer):
     #     serializer.save(id=self.request.data["id"])
 
 
 class TransactionUpdateView(generics.UpdateAPIView):
+    """
+    Update transaction by pk
+    """
     queryset = Transaction.objects.filter()
     serializer_class = TransactionUpdateSerializer

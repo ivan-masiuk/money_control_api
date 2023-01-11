@@ -35,3 +35,14 @@ class TransactionCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
         fields = "__all__"
+
+    def create(self, validated_data):
+        updated_values = {
+            "amount": validated_data.get("amount"),
+            "type": validated_data.get("type"),
+        }
+        created, transaction = Transaction.objects.update_or_create(
+            id=validated_data.get("id"),
+            defaults=updated_values,
+        )
+        return transaction

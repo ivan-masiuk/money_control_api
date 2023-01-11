@@ -18,11 +18,10 @@ class TransactionDetailsSerializer(serializers.ModelSerializer):
     Prepare data of transaction by all fields
     """
 
-    # user_fk = serializers.SlugRelatedField(
-    #     slug_field="name", read_only=True,  # many=True
-    # )
+    customer_fk = serializers.SlugRelatedField(
+        slug_field="name", read_only=True,  # many=True
+    )
 
     class Meta:
         model = Transaction
         exclude = ("updated", )
-
